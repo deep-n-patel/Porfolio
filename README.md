@@ -1,5 +1,7 @@
 # Deep Patel — Software, Data & AI
 
+[Visit my portfolio](https://deep-n-patel.github.io/Porfolio/) — side quests included.
+
 Hey, I’m Deep. I'm a Computer Science honours student at the University of Manitoba.
 I build apps, work with data, experiment with AI, and occasionally convince all
 three to cooperate.
