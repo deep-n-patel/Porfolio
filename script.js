@@ -36,3 +36,38 @@ if (matchMedia("(pointer:fine)").matches) {
   );
 }
 
+// Collectible shards
+// Collection state lasts for this page visit and resets when the page reloads.
+let shardTotal = 0;
+let toastTimer;
+qsa("[data-shard]").forEach((shard) =>
+  shard.addEventListener("click", () => {
+    // Ignore repeated clicks while the collection animation finishes.
+    if (shard.classList.contains("collected")) return;
+    shard.classList.add("collected");
+    shardTotal += 1;
+    qs("#shardCount").textContent = `${shardTotal} / 5`;
+    qs("#toastCount").textContent = shardTotal;
+    qs("#toast").classList.add("show");
+    // Restart the notification timer when shards are collected in quick succession.
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => qs("#toast").classList.remove("show"), 2100);
+    if (shardTotal === 5) {
+      // Five shards are defined in index.html, along with the visible total labels.
+      const locked = qs("#lockedFact");
+      locked.classList.add("unlocked");
+      locked.innerHTML = `
+        <div class="lock-icon">🧙</div>
+        <div>
+          <small>SECRET LORE UNLOCKED</small>
+          <h3>
+            From a chess opponent to safer Winnipeg routes, I’ve explored AI on both
+            the game board and the city map.
+          </h3>
+        </div>
+        <span>5 / 5</span>
+      `;
+    }
+  }),
+);
+
