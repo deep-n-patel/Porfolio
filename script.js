@@ -126,3 +126,41 @@ const typePhrase = () => {
 };
 setTimeout(typePhrase, 900);
 
+// Scroll animations
+// Content is visible by default in CSS. Skip these effects if the CDN is unavailable
+// or reduced motion is requested; the terminal, XP, and collectibles still work.
+if (
+  window.gsap &&
+  window.ScrollTrigger &&
+  !matchMedia("(prefers-reduced-motion: reduce)").matches
+) {
+  gsap.registerPlugin(ScrollTrigger);
+  // Reveal each marked block once as it enters the viewport.
+  gsap.utils.toArray(".reveal").forEach((element) => {
+    gsap.from(element, {
+      y: 60,
+      opacity: 0,
+      duration: 0.85,
+      ease: "power3.out",
+      scrollTrigger: { trigger: element, start: "top 86%", once: true },
+    });
+  });
+  gsap.utils.toArray(".quest-card").forEach((card, index) => {
+    // Alternate icon rotation; scrub ties the animation to scroll position.
+    gsap.from(card.querySelector(".quest-icon"), {
+      rotate: index % 2 ? 10 : -10,
+      scale: 0.7,
+      scrollTrigger: { trigger: card, start: "top 80%", scrub: 1, end: "top 45%" },
+    });
+  });
+  // Subtle hero movement continues while the hero scrolls out of view.
+  gsap.to(".orbit-one", {
+    rotate: 90,
+    y: 80,
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 },
+  });
+  gsap.to(".player-card", {
+    y: -35,
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 },
+  });
+}
