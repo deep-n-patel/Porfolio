@@ -1,20 +1,609 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Page metadata and fonts. Portfolio content lives in the sections below. -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deep Patel - Portfolio</title>
+    <meta
+      name="description"
+      content="I’m Deep Patel, a Computer Science honours student at the University of Manitoba. I build full-stack apps, AI projects, data pipelines, and practical automation."
+    />
+    <meta name="theme-color" content="#17152d" />
+    <title>Deep Patel — Software, Data &amp; AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <main>
-      <h1>Hey, I'm Deep Patel.</h1>
-      <p>I'm a Computer Science honours student at the University of Manitoba.
-         I build software, work with data, and explore AI.</p>
-      <nav aria-label="Find me online">
-        <a href="https://github.com/deep-n-patel">GitHub</a>
-        <a href="https://www.linkedin.com/in/deep-patel-b7a2a3385/">LinkedIn</a>
-        <a href="mailto:pateld43@myumanitoba.ca">Email</a>
+    <!-- Decorative texture; it does not intercept clicks or screen-reader navigation. -->
+    <div class="noise" aria-hidden="true"></div>
+    <!-- Scroll progress: script.js updates the level, fill width, and XP counter. -->
+    <div class="xp-hud" style="display: none" aria-label="Page exploration progress">
+      <span class="xp-label">LVL <b id="level">01</b></span>
+      <div class="xp-track"><span id="xpFill"></span></div>
+      <span class="xp-count"><b id="xpCount">000</b> XP</span>
+    </div>
+
+    <!-- Navigation targets use section IDs, which are also linked from the terminal. -->
+    <header class="nav-wrap">
+      <a class="brand" href="#top" aria-label="Deep Patel home">
+        <span class="brand-gem">DP</span>
+        <span>deep<span class="accent-dot">.</span>patel</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#quests">projects</a>
+        <a href="#experience">experience</a>
+        <a href="#stats">skills</a>
+        <a href="#lore">about</a>
       </nav>
+      <a class="mini-cta" href="Deep_Resume.pdf" download>grab résumé ↓</a>
+    </header>
+
+    <main id="top">
+      <!-- Hero: introduction, profile links, and the first two collectible shards. -->
+      <section class="hero section-shell">
+        <div class="orbit orbit-one" aria-hidden="true"></div>
+        <div class="orbit orbit-two" aria-hidden="true"></div>
+        <button class="shard shard-1" data-shard disabled aria-label="Collect data shard one">✦</button>
+        <button class="shard shard-2" data-shard disabled aria-label="Collect data shard two">✦</button>
+
+        <div class="hero-copy reveal">
+          <div class="status-pill"><span></span> CS honours student · builder · Winnipeg, MB</div>
+          <p class="eyebrow">PLAYER ONE / SOFTWARE · DATA · AI</p>
+          <h1>I turn ideas<br /><em>into code.</em></h1>
+          <p class="hero-lede">
+            Hey, I’m Deep — a Computer Science honours student at the University of Manitoba. I
+            build full-stack apps, explore AI, automate everyday tasks, and make data useful.
+            Curiosity is the common thread.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#quests">explore my work <span>→</span></a>
+            <a
+              class="button button-ghost"
+              href="https://github.com/deep-n-patel"
+              target="_blank"
+              rel="noreferrer"
+              >GitHub ↗</a
+            >
+            <a
+              class="button button-ghost"
+              href="https://www.linkedin.com/in/deep-patel-b7a2a3385/"
+              target="_blank"
+              rel="noreferrer"
+              >LinkedIn ↗</a
+            >
+          </div>
+          <p class="microcopy">scroll to earn XP · find all 5 data shards</p>
+        </div>
+
+        <!-- The player illustration is built from layered elements in styles.css. -->
+        <div class="hero-visual reveal" aria-label="My player card">
+          <div class="player-card tilt-card">
+            <div class="card-topline"><span>CURIOUS BUILDER</span><span>WINNIPEG, MB</span></div>
+            <div class="avatar-stage">
+              <div class="avatar-shadow"></div>
+              <div class="avatar">
+                <span class="avatar-hair"></span>
+                <span class="avatar-head"></span>
+                <span class="avatar-glasses left"></span>
+                <span class="avatar-glasses right"></span>
+                <span class="avatar-bridge"></span>
+                <span class="avatar-body"></span>
+                <span class="avatar-laptop">&gt;_</span>
+              </div>
+              <span class="float-rune rune-a">{ }</span>
+              <span class="float-rune rune-b">01</span>
+              <span class="float-rune rune-c">⌁</span>
+            </div>
+            <div class="player-name">
+              <strong>DEEP PATEL</strong><span>SOFTWARE · DATA · AI</span>
+            </div>
+            <div class="power-row">
+              <div><span>BUILD</span><b>APPS</b></div>
+              <div><span>EXPLORE</span><b>AI</b></div>
+              <div><span>CONNECT</span><b>DATA</b></div>
+            </div>
+          </div>
+          <div class="achievement-toast">
+            <span>🏆</span>
+            <div><small>UWINNIPEG HACKS 2026</small><b>Best AI-Integrated Hack</b></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Repeat the same technology sequence twice to make the marquee loop seamless. -->
+      <section class="marquee" aria-label="Technology skills">
+        <div class="marquee-track">
+          <span>PYTHON</span><i>✦</i><span>REACT</span><i>✦</i><span>JAVA</span><i>✦</i
+          ><span>SQL</span><i>✦</i><span>AWS</span><i>✦</i><span>DOCKER</span><i>✦</i>
+          <span>PYTHON</span><i>✦</i><span>REACT</span><i>✦</i><span>JAVA</span><i>✦</i
+          ><span>SQL</span><i>✦</i><span>AWS</span><i>✦</i><span>DOCKER</span><i>✦</i>
+        </div>
+      </section>
+
+      <!-- About: a short introduction before the detailed project and experience lists. -->
+      <section class="intro section-shell reveal">
+        <p class="eyebrow">THE MAIN STORY</p>
+        <h2>Part developer.<br />Part explorer.<br /><span>Full-time curious human.</span></h2>
+        <p>
+          From a finance dashboard and a chess AI to safer city routes and enterprise analytics, I
+          like solving problems from different angles. My experience spans individual builds, Agile
+          teams, hackathons, and the communication skills that come from working with customers and
+          event clients.
+        </p>
+      </section>
+
+      <!-- Projects: each quest-card contains metadata, a summary, tags, and an optional repository link. -->
+      <section id="quests" class="quests section-shell">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">PROJECT QUEST LOG</p>
+            <h2>Different problems.<br />Same curiosity.</h2>
+          </div>
+          <p>
+            Personal builds, team projects, and hackathon experiments across software, data, and AI.
+          </p>
+        </div>
+
+        <div class="quest-list">
+          <article class="quest-card reveal">
+            <div class="quest-number">01</div>
+            <div class="quest-icon market-icon" aria-hidden="true">↗</div>
+            <div class="quest-copy">
+              <div class="quest-meta"><span>PERSONAL PROJECT</span><span>JUL 2026</span></div>
+              <h3>Merginator</h3>
+              <p>
+                I built a desktop tool that matches partner order spreadsheets with local inventory.
+                I added configurable customer and part-number mapping, stock updates, and audit
+                sheets with exception highlighting, then packaged the Tkinter app as a Windows
+                executable.
+              </p>
+              <div class="tags">
+                <span>Python</span><span>OpenPyXL</span><span>Tkinter</span><span>Automation</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://github.com/deep-n-patel/merginator"
+                target="_blank"
+                rel="noreferrer"
+                >explore Merginator ↗</a
+              >
+            </div>
+            <div class="quest-reward"><small>QUEST TYPE</small><strong>TOOL</strong></div>
+          </article>
+
+          <article class="quest-card reveal">
+            <div class="quest-number">02</div>
+            <div class="quest-icon weather-icon" aria-hidden="true">☂</div>
+            <div class="quest-copy">
+              <div class="quest-meta">
+                <span>AGILE TEAM PROJECT</span><span>JAN – APR 2026</span>
+              </div>
+              <h3>Finus</h3>
+              <p>
+                I worked with an Agile team to build a full-stack personal finance dashboard. I
+                implemented authentication and stock/forex search, charts, and watchlists;
+                contributed to CI/CD and Docker builds; and supported AWS deployment with Terraform,
+                EC2, and RDS MySQL.
+              </p>
+              <div class="tags">
+                <span>React</span><span>TypeScript</span><span>FastAPI</span><span>MySQL</span
+                ><span>AWS</span><span>Docker</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://github.com/MeasureOneCodeTwice/Finus"
+                target="_blank"
+                rel="noreferrer"
+                >explore Finus ↗</a
+              >
+            </div>
+            <div class="quest-reward"><small>QUEST TYPE</small><strong>APP</strong></div>
+          </article>
+
+          <article class="quest-card reveal">
+            <div class="quest-number">03</div>
+            <div class="quest-icon shield-icon" aria-hidden="true">◇</div>
+            <div class="quest-copy">
+              <div class="quest-meta"><span>AWARD-WINNING HACK</span><span>JAN 2026</span></div>
+              <h3>SafePath</h3>
+              <p>
+                I built interactive crime heatmaps and AI-powered walking and cycling route planning
+                using five years of Winnipeg violent crime data. Our project prioritizes lower-risk
+                areas over the shortest distance and won Best AI-Integrated Hack at UWinnipeg Hacks.
+              </p>
+              <div class="tags">
+                <span>AI</span><span>Pathfinding</span><span>Data visualization</span
+                ><span>Team project</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://github.com/JeromeDeGuz/Safe-Path-WPG"
+                target="_blank"
+                rel="noreferrer"
+                >explore SafePath ↗</a
+              >
+            </div>
+            <div class="quest-reward"><small>QUEST TYPE</small><strong>AI</strong></div>
+          </article>
+
+          <article class="quest-card reveal">
+            <div class="quest-number">04</div>
+            <div class="quest-icon weather-icon" aria-hidden="true">+</div>
+            <div class="quest-copy">
+              <div class="quest-meta"><span>DEVHACKS 2026</span><span>MAR 2026</span></div>
+              <h3>Keep Me Alive</h3>
+              <p>
+                I helped build a hackathon web app for vaccine eligibility, scheduling, and history.
+                I built a rule-based recommendation engine, colour-coded timelines, email and SMS
+                reminders, and Google Calendar syncing, with an AI assistant for personalized
+                immunization questions.
+              </p>
+              <div class="tags">
+                <span>Web app</span><span>Rule-based systems</span><span>AI assistant</span
+                ><span>Calendar integration</span>
+              </div>
+            </div>
+            <div class="quest-reward"><small>QUEST TYPE</small><strong>HACK</strong></div>
+          </article>
+
+          <article class="quest-card reveal">
+            <div class="quest-number">05</div>
+            <div class="quest-icon market-icon" aria-hidden="true">♟</div>
+            <div class="quest-copy">
+              <div class="quest-meta"><span>PERSONAL PROJECT</span><span>SEP 2025</span></div>
+              <h3>Chess with an AI Opponent</h3>
+              <p>
+                I built a Java chess game with a minimax opponent, move validation, and board-state
+                tracking. I used object-oriented principles to keep the game logic maintainable and
+                illegal moves off the board.
+              </p>
+              <div class="tags">
+                <span>Java</span><span>Minimax</span><span>Algorithms</span><span>OOP</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://github.com/deep-n-patel/Chess-Game"
+                target="_blank"
+                rel="noreferrer"
+                >explore Chess Game ↗</a
+              >
+            </div>
+            <div class="quest-reward"><small>QUEST TYPE</small><strong>AI</strong></div>
+          </article>
+
+          <article class="quest-card reveal">
+            <div class="quest-number">06</div>
+            <div class="quest-icon shield-icon" aria-hidden="true">▤</div>
+            <div class="quest-copy">
+              <div class="quest-meta"><span>TEAM OF THREE</span><span>SEP – DEC 2024</span></div>
+              <h3>Chicago Crashes Database</h3>
+              <p>
+                I worked in a team of three to build a Java command-line app for exploring Chicago
+                crash statistics. I built a relational SQL database with BCNF normalization, a
+                Python CSV import workflow, and complex queries to uncover patterns in the data.
+              </p>
+              <div class="tags">
+                <span>Java</span><span>SQL</span><span>Python</span><span>Database design</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://github.com/deep-n-patel/ChicagoCrashesDatabase"
+                target="_blank"
+                rel="noreferrer"
+                >explore Chicago Crashes ↗</a
+              >
+            </div>
+            <div class="quest-reward"><small>QUEST TYPE</small><strong>DATA</strong></div>
+          </article>
+
+          <article class="quest-card reveal">
+            <div class="quest-number">07</div>
+            <div class="quest-icon weather-icon" aria-hidden="true">$</div>
+            <div class="quest-copy">
+              <div class="quest-meta"><span>FROM MY GITHUB</span><span>FINANCE TRACKER</span></div>
+              <h3>SpendSense</h3>
+              <p>
+                A Java personal finance tracker for recording income, monitoring spending, and
+                setting and evaluating savings goals, with flexible database support.
+              </p>
+              <div class="tags">
+                <span>Java</span><span>Personal finance</span><span>Databases</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://github.com/deep-n-patel/SpendSense"
+                target="_blank"
+                rel="noreferrer"
+                >explore SpendSense ↗</a
+              >
+            </div>
+            <div class="quest-reward"><small>QUEST TYPE</small><strong>APP</strong></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Work experience: dates and location sit beside each role on wider screens. -->
+      <section id="experience" class="experience section-shell">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">EXPERIENCE LOG</p>
+            <h2>Code, customers,<br />and collaboration.</h2>
+          </div>
+          <p>
+            Every role has taught me something about building useful things and working well with
+            people.
+          </p>
+        </div>
+        <div class="experience-list">
+          <article class="experience-card reveal">
+            <div class="experience-period">
+              <span>CO-OP WORK TERM 1</span>
+              <p>May – Aug 2026</p>
+              <small>Winnipeg, Manitoba</small>
+            </div>
+            <div>
+              <h3>BI Software Developer</h3>
+              <p class="organization">Richardson International</p>
+              <ul>
+                <li>
+                  I developed Python and SQL workflows with Apache Airflow and Snowflake,
+                  integrating market, forecast, and operational data from APIs and Oracle databases.
+                </li>
+                <li>
+                  I standardized dbt execution across DAGs and extended models for orders, invoices,
+                  freight, forecasts, and agricultural reporting.
+                </li>
+                <li>
+                  I improved Power BI reporting accuracy and introduced SQLFluff linting to keep SQL
+                  consistent and maintainable.
+                </li>
+              </ul>
+              <div class="tags">
+                <span>Python</span><span>SQL</span><span>Airflow</span><span>Snowflake</span
+                ><span>dbt</span><span>Power BI</span>
+              </div>
+            </div>
+          </article>
+          <article class="experience-card reveal">
+            <div class="experience-period">
+              <span>CUSTOMER &amp; TEAM SUPPORT</span>
+              <p>Jun 2023 – Present</p>
+              <small>Winnipeg, Manitoba</small>
+            </div>
+            <div>
+              <h3>Sales Associate</h3>
+              <p class="organization">Marshalls and Homesense</p>
+              <p>
+                I manage inventory and restocking, train new employees on procedures and internal
+                systems, and resolve customer inquiries. I balance competing responsibilities with
+                clear communication and attention to detail.
+              </p>
+            </div>
+          </article>
+          <article class="experience-card reveal">
+            <div class="experience-period">
+              <span>EVENT OPERATIONS</span>
+              <p>Sep 2022 – May 2024</p>
+              <small>Winnipeg, Manitoba</small>
+            </div>
+            <div>
+              <h3>Event Planner</h3>
+              <p class="organization">Big Bang Events</p>
+              <p>
+                I coordinated setups and takedowns under tight deadlines, assembled decorative
+                designs, and worked with clients to bring their ideas to life. I shared tasks with
+                my team to keep events running efficiently and safely.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Skills: grouped text and a visual inventory share the same two-column layout. -->
+      <section id="stats" class="stats section-shell">
+        <button class="shard shard-3" data-shard disabled aria-label="Collect data shard three">✦</button>
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">CHARACTER STATS</p>
+            <h2>Current build.</h2>
+          </div>
+          <p>
+            A toolkit built through coursework, personal projects, hackathons, and professional
+            experience.
+          </p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-panel reveal">
+            <div class="skill-group">
+              <h3>Programming languages</h3>
+              <p>Python · Java · SQL · C · C++ · JavaScript · TypeScript · R · Assembly</p>
+            </div>
+            <div class="skill-group">
+              <h3>Web &amp; frameworks</h3>
+              <p>React · Node.js · HTML/CSS · FastAPI · Tkinter</p>
+            </div>
+            <div class="skill-group">
+              <h3>Data engineering &amp; BI</h3>
+              <p>Apache Airflow · Snowflake · dbt · Power BI</p>
+            </div>
+            <div class="skill-group">
+              <h3>Databases</h3>
+              <p>PostgreSQL · MySQL · SQLite · Firestore · Neo4j</p>
+            </div>
+            <div class="skill-group">
+              <h3>Cloud &amp; DevOps</h3>
+              <p>AWS · Terraform · Docker · GitHub Actions · Git</p>
+            </div>
+          </div>
+          <div class="inventory reveal">
+            <p class="eyebrow">INVENTORY</p>
+            <div class="inventory-grid">
+              <div><b aria-hidden="true">Py</b><span>Python</span></div>
+              <div><b aria-hidden="true">⚛</b><span>React</span></div>
+              <div><b aria-hidden="true">{ }</b><span>Java</span></div>
+              <div><b aria-hidden="true">TS</b><span>TypeScript</span></div>
+              <div><b aria-hidden="true">▤</b><span>SQL</span></div>
+              <div><b aria-hidden="true">☁</b><span>AWS</span></div>
+              <div><b aria-hidden="true">⬡</b><span>Docker</span></div>
+              <div><b aria-hidden="true">❄</b><span>Snowflake</span></div>
+            </div>
+            <p class="inventory-note">
+              From interfaces and algorithms to data models and deployments — I enjoy connecting the
+              pieces.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Education and achievements. The locked message is replaced after all five shards are collected. -->
+      <section id="lore" class="lore section-shell">
+        <button class="shard shard-4" data-shard disabled aria-label="Collect data shard four">✦</button>
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">EDUCATION &amp; BONUS LORE</p>
+            <h2>A little more<br />about me.</h2>
+          </div>
+          <p>The academic foundation, achievements, and experiences behind the projects.</p>
+        </div>
+        <article class="education-card reveal">
+          <div>
+            <p class="eyebrow">UNIVERSITY OF MANITOBA</p>
+            <h3>Bachelor of Computer Science, Honours</h3>
+            <p>Co-op Option · Minor in Mathematics and Statistics</p>
+          </div>
+          <div class="education-meta">
+            <p>Sep 2022 – Present</p>
+            <span>Winnipeg, Manitoba</span>
+          </div>
+        </article>
+        <div class="fact-grid">
+          <article class="fact-card yellow reveal">
+            <span class="fact-no">ACADEMIC STATS</span
+            ><b>3.91<span class="fact-unit"> / 4.50</span></b>
+            <h3>GPA</h3>
+            <p>
+              I’m studying Computer Science with a minor in Mathematics and Statistics — a
+              foundation for both building systems and understanding the data inside them.
+            </p>
+          </article>
+          <article class="fact-card coral reveal">
+            <span class="fact-no">CONSISTENCY UNLOCKED</span><b>4</b>
+            <h3>Dean’s Honour List terms</h3>
+            <p>
+              I made the Dean’s Honour List at the University of Manitoba in Fall 2022, Winter 2023,
+              Fall 2023, and Winter 2024.
+            </p>
+          </article>
+          <article class="fact-card mint reveal">
+            <span class="fact-no">ACADEMIC RECOGNITION</span><b>2</b>
+            <h3>scholarship awards</h3>
+            <p>
+              I received the International Undergraduate Student Scholarship in Fall 2022 and Fall
+              2023.
+            </p>
+          </article>
+          <article class="fact-card violet reveal">
+            <span class="fact-no">BEYOND THE KEYBOARD</span><b>MUN</b>
+            <h3>Model United Nations delegate</h3>
+            <p>
+              Nairobi, Kenya · Jan – Apr 2023. I drafted resolutions, proposed amendments, and built
+              consensus while practicing public speaking and working under debate deadlines.
+            </p>
+          </article>
+        </div>
+
+        <div class="locked-fact reveal" id="lockedFact">
+          <div class="lock-icon">🔒</div>
+          <div>
+            <small>SECRET LORE</small>
+            <h3>Collect all 5 data shards to decrypt.</h3>
+          </div>
+          <span id="shardCount">0 / 5</span>
+        </div>
+      </section>
+
+      <!-- Terminal: data-command values must match keys in the responses object in script.js. -->
+      <section class="terminal-section section-shell reveal">
+        <button class="shard shard-5" data-shard disabled aria-label="Collect data shard five">✦</button>
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="dots"><i></i><i></i><i></i></span><span>deep@portfolio ~</span
+            ><button id="clearTerminal" disabled>clear</button>
+          </div>
+          <div class="terminal-body" id="terminalOutput" aria-live="polite">
+            <p><span class="prompt">deep@quest:~$</span> whoami</p>
+            <p class="terminal-response">
+              I’m a CS honours student, software builder, data explorer, and hackathon teammate.
+            </p>
+            <p>
+              <span class="prompt">deep@quest:~$</span> <span id="typedCommand"></span
+              ><span class="cursor">▌</span>
+            </p>
+          </div>
+          <div class="terminal-commands" aria-label="Terminal shortcuts">
+            <button disabled data-command="skills">skills</button
+            ><button disabled data-command="projects">projects</button
+            ><button disabled data-command="education">education</button
+            ><button disabled data-command="quest">quest</button
+            ><button disabled data-command="funfact">funfact</button
+            ><button disabled data-command="contact">contact</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact: public profiles, the downloadable resume, and an email link. -->
+      <section class="final-cta section-shell reveal">
+        <div class="final-burst" aria-hidden="true">✦</div>
+        <p class="eyebrow">READY PLAYER TWO?</p>
+        <h2>Let’s build something<br /><em>weirdly useful.</em></h2>
+        <p>
+          Have an idea for an app, an interesting data problem, or a team project? I’d love to talk
+          software, AI, automation, and whatever we can build together.
+        </p>
+        <div class="hero-actions">
+          <a
+            class="button button-dark"
+            href="https://www.linkedin.com/in/deep-patel-b7a2a3385/"
+            target="_blank"
+            rel="noreferrer"
+            >say hello on LinkedIn ↗</a
+          >
+          <a
+            class="button button-light"
+            href="https://github.com/deep-n-patel"
+            target="_blank"
+            rel="noreferrer"
+            >browse GitHub ↗</a
+          >
+          <a class="button button-light" href="Deep_Resume.pdf" download>download résumé ↓</a>
+        </div>
+        <a class="email-link" href="mailto:pateld43@myumanitoba.ca">pateld43@myumanitoba.ca</a>
+      </section>
     </main>
+
+    <!-- The copyright year is filled in by script.js. -->
+    <footer>
+      <span>MADE WITH CURIOSITY + CODE</span>
+      <span>© <span id="year">2026</span> DEEP PATEL</span>
+      <a href="#top">BACK TO SPAWN ↑</a>
+    </footer>
+
+    <!-- A live-region notification announces each collected shard without moving focus. -->
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <span>✦</span>
+      <div>
+        <small>DATA SHARD FOUND</small><b><span id="toastCount">1</span> of 5 collected</b>
+      </div>
+    </div>
+
+    <!-- Optional animation libraries load before our script; core interactions work without them.
+         Keep these scripts at the end of body so their DOM targets already exist. -->
+    
+    
+    
   </body>
 </html>
