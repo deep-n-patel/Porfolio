@@ -22,7 +22,7 @@
     <!-- Decorative texture; it does not intercept clicks or screen-reader navigation. -->
     <div class="noise" aria-hidden="true"></div>
     <!-- Scroll progress: script.js updates the level, fill width, and XP counter. -->
-    <div class="xp-hud" style="display: none" aria-label="Page exploration progress">
+    <div class="xp-hud" aria-label="Page exploration progress">
       <span class="xp-label">LVL <b id="level">01</b></span>
       <div class="xp-track"><span id="xpFill"></span></div>
       <span class="xp-count"><b id="xpCount">000</b> XP</span>
@@ -589,7 +589,7 @@
     <!-- The copyright year is filled in by script.js. -->
     <footer>
       <span>MADE WITH CURIOSITY + CODE</span>
-      <span>© <span id="year">2026</span> DEEP PATEL</span>
+      <span>© <span id="year"></span> DEEP PATEL</span>
       <a href="#top">BACK TO SPAWN ↑</a>
     </footer>
 
@@ -605,6 +605,6 @@
          Keep these scripts at the end of body so their DOM targets already exist. -->
     
     
-    
+    <script src="script.js"></script>
   </body>
 </html>
