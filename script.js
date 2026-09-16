@@ -71,3 +71,58 @@ qsa("[data-shard]").forEach((shard) =>
   }),
 );
 
+// Terminal commands
+// Keys match the shortcut buttons' data-command attributes in index.html.
+// These HTML strings are authored locally; never insert visitor input here.
+const responses = {
+  skills:
+    "Python · Java · SQL · C/C++ · JavaScript · TypeScript · R · Assembly · React · Node.js · Airflow · Snowflake · dbt · Power BI · PostgreSQL · MySQL · SQLite · Firestore · Neo4j · AWS · Terraform · Docker · GitHub Actions",
+  projects: `Merginator · Finus · SafePath · Keep Me Alive · Chess AI · Chicago Crashes · SpendSense. <a href="#quests">Explore the project log ↑</a>`,
+  education:
+    "University of Manitoba · Bachelor of Computer Science, Honours (Co-op Option) · Minor in Mathematics and Statistics · GPA 3.91/4.50",
+  quest:
+    "My current objective: keep learning and build useful software, thoughtful AI projects, and dependable data systems.",
+  funfact:
+    "Our SafePath project won Best AI-Integrated Hack at UWinnipeg Hacks 2026. I’ve also taken my teamwork skills to Model United Nations in Nairobi.",
+  contact: `
+    Open comms channel:
+    <a href="https://github.com/deep-n-patel" target="_blank" rel="noreferrer">GitHub ↗</a> ·
+    <a href="https://www.linkedin.com/in/deep-patel-b7a2a3385/" target="_blank" rel="noreferrer">LinkedIn ↗</a> ·
+    <a href="mailto:pateld43@myumanitoba.ca">Email ↗</a>
+  `,
+};
+const terminalOutput = qs("#terminalOutput");
+const addTerminalLine = (command) => {
+  // Each command replaces the idle prompt, adds its response, then starts a new prompt.
+  const activeLine = terminalOutput.lastElementChild;
+  activeLine.innerHTML = `<span class="prompt">deep@quest:~$</span> ${command}`;
+  const response = document.createElement("p");
+  response.className = "terminal-response";
+  response.innerHTML = responses[command];
+  terminalOutput.append(response);
+  const prompt = document.createElement("p");
+  prompt.innerHTML = `<span class="prompt">deep@quest:~$</span> <span class="cursor">▌</span>`;
+  terminalOutput.append(prompt);
+  // Keep the newest response visible once the terminal starts scrolling internally.
+  terminalOutput.scrollTop = terminalOutput.scrollHeight;
+};
+qsa("[data-command]").forEach((button) =>
+  button.addEventListener("click", () => addTerminalLine(button.dataset.command)),
+);
+qs("#clearTerminal").addEventListener("click", () => {
+  terminalOutput.innerHTML = `<p><span class="prompt">deep@quest:~$</span> <span class="cursor">▌</span></p>`;
+});
+
+// Type the introductory command once, after a short pause.
+const phrase = "run portfolio --fun-mode";
+let typedIndex = 0;
+const typePhrase = () => {
+  const typedCommand = qs("#typedCommand");
+  // Clear or a shortcut can remove this span before typing finishes.
+  if (typedCommand && typedIndex <= phrase.length) {
+    typedCommand.textContent = phrase.slice(0, typedIndex++);
+    setTimeout(typePhrase, 55);
+  }
+};
+setTimeout(typePhrase, 900);
+
