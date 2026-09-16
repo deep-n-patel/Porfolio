@@ -1,0 +1,1601 @@
+/* 01. Theme tokens
+   Shared colors and font families. Change these to update the site-wide palette. */
+:root {
+  --ink: #17152d;
+  --paper: #f7f2e8;
+  --purple: #7057f5;
+  --purple-dark: #4d36cc;
+  --yellow: #ffd447;
+  --coral: #ff7b61;
+  --mint: #78dfb7;
+  --pink: #f4a3d4;
+  --line: rgba(23, 21, 45, 0.15);
+  --mono: "DM Mono", monospace;
+  --sans: "Manrope", sans-serif;
+}
+
+/* 02. Base styles and shared layout
+   Clip decorative overflow while allowing the document to scroll vertically. */
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--sans);
+  overflow-x: hidden;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font: inherit;
+}
+/* The fixed texture is decorative and must never block pointer interactions. */
+.noise {
+  position: fixed;
+  inset: 0;
+  opacity: 0.04;
+  z-index: 100;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.section-shell {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+.eyebrow {
+  margin: 0 0 18px;
+  font: 500 12px/1 var(--mono);
+  letter-spacing: 0.15em;
+}
+
+/* 03. Exploration HUD
+   script.js updates the fill width and counters as the visitor scrolls. */
+.xp-hud {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  z-index: 80;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(390px, calc(100% - 32px));
+  padding: 10px 14px;
+  color: white;
+  background: rgba(23, 21, 45, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  box-shadow: 0 12px 35px rgba(23, 21, 45, 0.25);
+  backdrop-filter: blur(12px);
+  font: 10px var(--mono);
+  letter-spacing: 0.08em;
+}
+.xp-track {
+  flex: 1;
+  height: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+.xp-track span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--yellow), var(--coral));
+  border-radius: inherit;
+  transition: width 0.18s ease-out;
+}
+.xp-label b {
+  color: var(--yellow);
+}
+.xp-count {
+  min-width: 62px;
+  text-align: right;
+}
+
+/* 04. Header, navigation, and resume button */
+.nav-wrap {
+  width: min(1280px, calc(100% - 48px));
+  height: 90px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 10;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+.brand-gem {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: white;
+  background: var(--purple);
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  transform: rotate(-6deg);
+  box-shadow: 3px 3px 0 var(--ink);
+  font: 500 11px var(--mono);
+}
+.accent-dot {
+  color: var(--coral);
+}
+nav {
+  display: flex;
+  gap: 32px;
+  font: 500 11px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+nav a {
+  position: relative;
+}
+nav a:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -5px;
+  height: 2px;
+  background: var(--purple);
+  transition: right 0.25s;
+}
+nav a:hover:after {
+  right: 0;
+}
+.mini-cta {
+  padding: 11px 16px;
+  border: 1px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--ink);
+  font: 500 10px var(--mono);
+  text-transform: uppercase;
+  transition: 0.2s;
+}
+.mini-cta:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+/* 05. Hero layout, introduction, and shared action buttons */
+.hero {
+  min-height: calc(100vh - 90px);
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 60px;
+  padding: 45px 0 95px;
+  position: relative;
+}
+.hero-copy {
+  position: relative;
+  z-index: 2;
+}
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 34px;
+  padding: 9px 13px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.42);
+  font: 10px var(--mono);
+}
+.status-pill span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #37bd83;
+  box-shadow: 0 0 0 4px rgba(55, 189, 131, 0.13);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 0 8px rgba(55, 189, 131, 0);
+  }
+}
+h1,
+h2,
+h3,
+p {
+  text-wrap: pretty;
+}
+h1 {
+  margin: 0;
+  font-size: clamp(72px, 8.8vw, 135px);
+  line-height: 0.8;
+  letter-spacing: -0.085em;
+  font-weight: 800;
+}
+h1 em,
+.final-cta h2 em {
+  color: var(--purple);
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+.hero-lede {
+  width: min(580px, 100%);
+  margin: 38px 0 0;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #4d4962;
+}
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 50px;
+  padding: 0 20px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  font: 500 11px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.button:hover {
+  transform: translateY(-3px);
+}
+.button-primary {
+  color: white;
+  background: var(--purple);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.button-primary:hover {
+  box-shadow: 6px 7px 0 var(--ink);
+}
+.button-ghost {
+  background: rgba(255, 255, 255, 0.5);
+}
+.microcopy {
+  margin-top: 22px;
+  color: #8a859b;
+  font: 10px var(--mono);
+}
+
+/* 06. Player card and CSS illustration
+   The avatar parts use explicit layers so hair, glasses, and laptop overlap correctly. */
+.hero-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  perspective: 1200px;
+}
+.player-card {
+  width: min(380px, 82vw);
+  padding: 14px;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 24px;
+  box-shadow: 16px 18px 0 var(--ink);
+  transform: rotate(3deg);
+  transform-style: preserve-3d;
+}
+.card-topline {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 5px 12px;
+  font: 500 10px var(--mono);
+  letter-spacing: 0.1em;
+}
+.avatar-stage {
+  position: relative;
+  height: 365px;
+  overflow: hidden;
+  background: #8e7bfa;
+  border: 2px solid var(--ink);
+  border-radius: 15px;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+.avatar-shadow {
+  position: absolute;
+  width: 230px;
+  height: 42px;
+  left: 50%;
+  bottom: 21px;
+  transform: translateX(-50%);
+  background: rgba(23, 21, 45, 0.25);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+.avatar {
+  position: absolute;
+  inset: 0;
+}
+.avatar-head {
+  position: absolute;
+  width: 145px;
+  height: 165px;
+  left: 50%;
+  top: 58px;
+  transform: translateX(-50%);
+  background: #b96f4e;
+  border: 3px solid var(--ink);
+  border-radius: 48% 48% 43% 43%;
+  z-index: 2;
+}
+.avatar-hair {
+  position: absolute;
+  width: 153px;
+  height: 82px;
+  left: 50%;
+  top: 43px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: var(--ink);
+  border-radius: 55% 48% 35% 30%;
+  z-index: 3;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 78%,
+    85% 64%,
+    75% 80%,
+    62% 60%,
+    48% 80%,
+    34% 62%,
+    22% 80%,
+    0 67%
+  );
+}
+.avatar-glasses {
+  position: absolute;
+  top: 120px;
+  width: 53px;
+  height: 38px;
+  border: 4px solid var(--ink);
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  z-index: 5;
+}
+.avatar-glasses.left {
+  left: calc(50% - 59px);
+}
+.avatar-glasses.right {
+  left: calc(50% + 6px);
+}
+.avatar-bridge {
+  position: absolute;
+  left: 50%;
+  top: 136px;
+  width: 13px;
+  height: 4px;
+  transform: translateX(-50%);
+  background: var(--ink);
+  z-index: 5;
+}
+.avatar-body {
+  position: absolute;
+  left: 50%;
+  bottom: -20px;
+  width: 245px;
+  height: 175px;
+  transform: translateX(-50%);
+  background: var(--coral);
+  border: 3px solid var(--ink);
+  border-radius: 48% 48% 0 0;
+}
+.avatar-laptop {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  width: 210px;
+  height: 105px;
+  transform: translateX(-50%);
+  color: var(--yellow);
+  background: var(--ink);
+  border: 3px solid #fff;
+  border-radius: 9px;
+  box-shadow: 5px 5px 0 rgba(23, 21, 45, 0.3);
+  font: 500 22px var(--mono);
+}
+/* Small floating decorations inside the player card. */
+.float-rune {
+  position: absolute;
+  z-index: 8;
+  padding: 6px 8px;
+  color: var(--ink);
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  border-radius: 7px;
+  box-shadow: 3px 3px 0 var(--ink);
+  font: 500 12px var(--mono);
+  animation: bob 3s ease-in-out infinite;
+}
+.rune-a {
+  left: 28px;
+  top: 58px;
+}
+.rune-b {
+  right: 25px;
+  top: 90px;
+  animation-delay: -0.7s;
+}
+.rune-c {
+  right: 36px;
+  bottom: 78px;
+  animation-delay: -1.4s;
+}
+@keyframes bob {
+  50% {
+    transform: translateY(-9px) rotate(4deg);
+  }
+}
+.player-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  padding: 14px 3px 10px;
+}
+.player-name strong {
+  font-size: 22px;
+  letter-spacing: -0.05em;
+}
+.player-name span {
+  font: 500 9px var(--mono);
+}
+.power-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  overflow: hidden;
+}
+.power-row div {
+  padding: 9px;
+  text-align: center;
+  border-right: 1.5px solid var(--ink);
+}
+.power-row div:last-child {
+  border: 0;
+}
+.power-row span {
+  display: block;
+  font: 8px var(--mono);
+}
+.power-row b {
+  font-size: 14px;
+}
+.achievement-toast {
+  position: absolute;
+  left: -20px;
+  bottom: 8%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 17px;
+  color: white;
+  background: var(--ink);
+  border: 2px solid white;
+  border-radius: 12px;
+  transform: rotate(-4deg);
+  box-shadow: 7px 8px 0 var(--purple);
+}
+.achievement-toast > span {
+  font-size: 27px;
+}
+.achievement-toast small,
+.achievement-toast b {
+  display: block;
+}
+.achievement-toast small {
+  color: var(--yellow);
+  font: 8px var(--mono);
+}
+.achievement-toast b {
+  margin-top: 4px;
+  font-size: 12px;
+}
+/* Large background orbits extend past the content shell intentionally. */
+.orbit {
+  position: absolute;
+  pointer-events: none;
+  border: 1px dashed rgba(112, 87, 245, 0.25);
+  border-radius: 50%;
+}
+.orbit-one {
+  width: 620px;
+  height: 620px;
+  right: -250px;
+  top: 20px;
+}
+.orbit-two {
+  width: 330px;
+  height: 330px;
+  left: -220px;
+  bottom: -100px;
+}
+
+/* 07. Collectible shards
+   JavaScript adds .collected once per shard; CSS handles the disappearance animation. */
+.shard {
+  position: absolute;
+  z-index: 12;
+  width: 36px;
+  height: 36px;
+  color: var(--ink);
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  border-radius: 50% 50% 8px 50%;
+  transform: rotate(45deg);
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink);
+  animation: shardFloat 2.2s ease-in-out infinite;
+}
+.shard:hover {
+  background: white;
+}
+.shard.collected {
+  pointer-events: none;
+  animation: collect 0.55s forwards;
+}
+.shard-1 {
+  top: 15%;
+  left: 47%;
+}
+.shard-2 {
+  right: 2%;
+  bottom: 16%;
+}
+.shard-3 {
+  right: 3%;
+  top: 17%;
+}
+.shard-4 {
+  left: 1%;
+  top: 44%;
+}
+.shard-5 {
+  right: 1%;
+  top: 5%;
+}
+@keyframes shardFloat {
+  50% {
+    translate: 0 -8px;
+    rotate: 55deg;
+  }
+}
+@keyframes collect {
+  to {
+    opacity: 0;
+    transform: scale(2) rotate(180deg);
+  }
+}
+
+/* 08. Technology marquee and introduction
+   Two identical sequences in the HTML allow a continuous half-track translation. */
+.marquee {
+  overflow: hidden;
+  padding: 17px 0;
+  color: white;
+  background: var(--ink);
+  transform: rotate(-1.2deg) scale(1.02);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 27px;
+  animation: marquee 28s linear infinite;
+  font: 500 12px var(--mono);
+  letter-spacing: 0.12em;
+}
+.marquee i {
+  color: var(--yellow);
+  font-style: normal;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.intro {
+  padding: 180px 0 160px;
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 80px;
+  align-items: end;
+}
+.intro .eyebrow {
+  grid-column: 1/-1;
+}
+.intro h2 {
+  margin: 0;
+  font-size: clamp(46px, 6vw, 86px);
+  line-height: 0.99;
+  letter-spacing: -0.065em;
+}
+.intro h2 span {
+  color: var(--purple);
+}
+.intro > p:last-child {
+  margin: 0 0 7px;
+  color: #5a556b;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+/* 09. Project cards and shared section headings */
+.quests {
+  padding: 120px 0;
+  border-top: 1px solid var(--line);
+}
+.section-heading {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 50px;
+  align-items: end;
+  margin-bottom: 65px;
+}
+.section-heading h2 {
+  margin: 0;
+  font-size: clamp(48px, 6vw, 78px);
+  line-height: 0.95;
+  letter-spacing: -0.065em;
+}
+.section-heading > p {
+  color: #686376;
+  line-height: 1.7;
+}
+.quest-list {
+  display: grid;
+  gap: 18px;
+}
+.quest-card {
+  display: grid;
+  grid-template-columns: 65px 115px 1fr 90px;
+  gap: 28px;
+  align-items: center;
+  min-height: 220px;
+  padding: 26px;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1.5px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 7px 7px 0 rgba(23, 21, 45, 0.1);
+  transition:
+    background 0.25s,
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+.quest-card:hover {
+  background: white;
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 13px 0 var(--ink);
+}
+.quest-number {
+  align-self: start;
+  font: 500 11px var(--mono);
+}
+.quest-icon {
+  display: grid;
+  place-items: center;
+  width: 105px;
+  height: 105px;
+  border: 2px solid var(--ink);
+  border-radius: 26px;
+  box-shadow: 5px 5px 0 var(--ink);
+  font-size: 46px;
+}
+.market-icon {
+  background: var(--yellow);
+}
+.weather-icon {
+  background: var(--mint);
+}
+.shield-icon {
+  color: white;
+  background: var(--purple);
+}
+.quest-meta {
+  display: flex;
+  gap: 10px;
+  color: var(--purple-dark);
+  font: 500 9px var(--mono);
+  letter-spacing: 0.1em;
+}
+.quest-meta span + span:before {
+  content: "•";
+  margin-right: 10px;
+  color: var(--ink);
+}
+.quest-copy h3 {
+  margin: 12px 0 8px;
+  font-size: 26px;
+  letter-spacing: -0.04em;
+}
+.quest-copy p {
+  max-width: 680px;
+  margin: 0;
+  color: #5d586d;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.tags {
+  display: flex;
+  gap: 7px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.tags span {
+  padding: 5px 9px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  font: 9px var(--mono);
+}
+.quest-reward {
+  text-align: right;
+}
+.quest-reward small {
+  display: block;
+  font: 8px var(--mono);
+}
+.quest-reward strong {
+  color: var(--purple);
+  font: 500 16px var(--mono);
+}
+
+/* 10. Skills panels and technology inventory */
+.stats {
+  position: relative;
+  padding: 120px 0;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+}
+.stat-panel,
+.inventory {
+  padding: 38px;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+}
+.stat-panel {
+  background: var(--ink);
+  color: white;
+}
+.stat-row {
+  display: grid;
+  grid-template-columns: 155px 1fr 30px;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.stat-row > span {
+  font: 11px var(--mono);
+}
+.stat-row > b {
+  color: var(--yellow);
+  font: 500 12px var(--mono);
+}
+.bar {
+  height: 10px;
+  padding: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+}
+.bar i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--purple), var(--yellow));
+  border-radius: inherit;
+}
+.stat-note {
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.45);
+  font: 9px var(--mono);
+}
+.inventory {
+  background: var(--yellow);
+  box-shadow: 9px 9px 0 var(--ink);
+}
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.inventory-grid div {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 11px;
+  transition: transform 0.2s;
+}
+.inventory-grid div:hover {
+  transform: rotate(5deg) scale(1.05);
+}
+.inventory-grid b {
+  font-size: 23px;
+}
+.inventory-grid span {
+  font: 8px var(--mono);
+}
+
+/* 11. Achievement cards and the locked bonus message */
+.lore {
+  position: relative;
+  padding: 130px 0;
+}
+.fact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.fact-card {
+  min-height: 350px;
+  padding: 32px;
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 8px 8px 0 var(--ink);
+}
+.fact-card:nth-child(even) {
+  transform: translateY(40px);
+}
+.fact-card.yellow {
+  background: var(--yellow);
+}
+.fact-card.coral {
+  background: var(--coral);
+}
+.fact-card.mint {
+  background: var(--mint);
+}
+.fact-card.violet {
+  color: white;
+  background: var(--purple);
+}
+.fact-no {
+  font: 500 9px var(--mono);
+  letter-spacing: 0.1em;
+}
+.fact-card > b {
+  display: block;
+  margin-top: 55px;
+  font-size: 80px;
+  line-height: 1;
+  letter-spacing: -0.08em;
+}
+.fact-card h3 {
+  margin: 8px 0 12px;
+  font-size: 25px;
+  letter-spacing: -0.04em;
+}
+.fact-card p {
+  max-width: 400px;
+  line-height: 1.6;
+  font-size: 14px;
+}
+.locked-fact {
+  margin-top: 95px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 25px 30px;
+  color: white;
+  background: var(--ink);
+  border-radius: 16px;
+  border: 2px solid var(--ink);
+}
+.lock-icon {
+  display: grid;
+  place-items: center;
+  width: 55px;
+  height: 55px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 23px;
+}
+.locked-fact small {
+  color: var(--yellow);
+  font: 9px var(--mono);
+  letter-spacing: 0.1em;
+}
+.locked-fact h3 {
+  margin: 4px 0 0;
+  font-size: 18px;
+}
+.locked-fact > span {
+  margin-left: auto;
+  color: var(--yellow);
+  font: 500 14px var(--mono);
+}
+.locked-fact.unlocked {
+  color: var(--ink);
+  background: var(--yellow);
+  animation: unlock 0.6s ease both;
+}
+.locked-fact.unlocked small,
+.locked-fact.unlocked > span {
+  color: var(--purple-dark);
+}
+@keyframes unlock {
+  50% {
+    transform: scale(1.03) rotate(-1deg);
+  }
+}
+
+/* 12. Interactive terminal
+   Output scrolls within the terminal once it reaches the maximum height. */
+.terminal-section {
+  position: relative;
+  padding: 100px 0 160px;
+}
+.terminal {
+  overflow: hidden;
+  color: #efecff;
+  background: #17152d;
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 14px 14px 0 var(--purple);
+  font: 13px/1.7 var(--mono);
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 17px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+}
+.dots {
+  display: flex;
+  gap: 6px;
+}
+.dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--coral);
+}
+.dots i:nth-child(2) {
+  background: var(--yellow);
+}
+.dots i:nth-child(3) {
+  background: var(--mint);
+}
+.terminal-bar button {
+  color: rgba(255, 255, 255, 0.5);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: 10px var(--mono);
+}
+.terminal-body {
+  min-height: 250px;
+  max-height: 420px;
+  overflow: auto;
+  padding: 28px;
+}
+.terminal-body p {
+  margin: 0 0 8px;
+}
+.prompt {
+  color: var(--mint);
+}
+.terminal-response {
+  color: #aaa3c0;
+  padding-left: 18px;
+}
+.cursor {
+  color: var(--yellow);
+  animation: blink 0.8s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.terminal-commands {
+  display: flex;
+  gap: 8px;
+  padding: 0 28px 25px;
+  flex-wrap: wrap;
+}
+.terminal-commands button {
+  padding: 7px 11px;
+  color: var(--yellow);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  cursor: pointer;
+  font: 10px var(--mono);
+}
+.terminal-commands button:hover {
+  background: var(--purple);
+}
+
+/* 13. Contact section and footer */
+.final-cta {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 80px;
+  padding: 110px 45px;
+  text-align: center;
+  color: white;
+  background: var(--purple);
+  border: 2px solid var(--ink);
+  border-radius: 28px;
+  box-shadow: 12px 12px 0 var(--ink);
+}
+.final-cta h2 {
+  margin: 0;
+  font-size: clamp(50px, 7vw, 92px);
+  line-height: 0.95;
+  letter-spacing: -0.065em;
+}
+.final-cta h2 em {
+  color: var(--yellow);
+}
+.final-cta > p:not(.eyebrow) {
+  max-width: 620px;
+  margin: 25px auto 0;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.7;
+}
+.final-cta .hero-actions {
+  justify-content: center;
+}
+.button-dark {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.button-light {
+  color: var(--ink);
+  background: white;
+}
+.final-burst {
+  position: absolute;
+  right: 5%;
+  top: 12%;
+  color: var(--yellow);
+  font-size: 55px;
+  animation: spin 8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+footer {
+  width: min(1280px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 0 0 80px;
+  display: flex;
+  justify-content: space-between;
+  color: #746f81;
+  font: 9px var(--mono);
+  letter-spacing: 0.1em;
+}
+/* 14. Shard notification
+   The notification stays offscreen until script.js adds .show. */
+.toast {
+  position: fixed;
+  z-index: 110;
+  top: 105px;
+  right: 25px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-width: 230px;
+  padding: 13px 17px;
+  color: white;
+  background: var(--ink);
+  border: 2px solid white;
+  border-radius: 12px;
+  box-shadow: 6px 6px 0 var(--yellow);
+  transform: translateX(calc(100% + 50px));
+  transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.2, 1.2);
+}
+.toast.show {
+  transform: translateX(0);
+}
+.toast > span {
+  color: var(--yellow);
+  font-size: 25px;
+}
+.toast small,
+.toast b {
+  display: block;
+}
+.toast small {
+  color: var(--mint);
+  font: 8px var(--mono);
+}
+.toast b {
+  margin-top: 3px;
+  font-size: 11px;
+}
+
+/* 15. Shared tablet layout (900px and below) */
+@media (max-width: 900px) {
+  nav {
+    display: none;
+  }
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 70px;
+  }
+  .hero-copy {
+    text-align: center;
+  }
+  .hero-lede {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-actions {
+    justify-content: center;
+  }
+  .hero-visual {
+    margin-top: 45px;
+  }
+  .intro {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  .section-heading {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .quest-card {
+    grid-template-columns: 55px 95px 1fr;
+  }
+  .quest-reward {
+    display: none;
+  }
+  .quest-icon {
+    width: 85px;
+    height: 85px;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .shard-1 {
+    left: 15%;
+  }
+  .section-shell {
+    width: min(100% - 32px, 1180px);
+  }
+}
+/* 16. Shared phone layout (620px and below) */
+@media (max-width: 620px) {
+  .nav-wrap {
+    width: calc(100% - 28px);
+    height: 76px;
+  }
+  .mini-cta {
+    display: none;
+  }
+  .hero {
+    min-height: auto;
+    padding-top: 48px;
+  }
+  .status-pill {
+    font-size: 8px;
+  }
+  .hero h1 {
+    font-size: clamp(66px, 22vw, 96px);
+  }
+  .hero-lede {
+    font-size: 15px;
+  }
+  .player-card {
+    box-shadow: 10px 12px 0 var(--ink);
+  }
+  .avatar-stage {
+    height: 315px;
+  }
+  .achievement-toast {
+    left: -8px;
+  }
+  .intro {
+    padding: 130px 0 110px;
+  }
+  .intro h2,
+  .section-heading h2 {
+    font-size: 46px;
+  }
+  .quests,
+  .stats,
+  .lore {
+    padding: 90px 0;
+  }
+  .quest-card {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 22px;
+  }
+  .quest-number {
+    position: absolute;
+  }
+  .quest-icon {
+    width: 70px;
+    height: 70px;
+    margin-left: auto;
+    font-size: 32px;
+  }
+  .quest-meta {
+    margin-top: -78px;
+    padding-right: 75px;
+    min-height: 58px;
+    align-items: start;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .quest-meta span + span:before {
+    display: none;
+  }
+  .stats-grid {
+    gap: 14px;
+  }
+  .stat-panel,
+  .inventory {
+    padding: 24px 20px;
+  }
+  .stat-row {
+    grid-template-columns: 110px 1fr 24px;
+    gap: 10px;
+  }
+  .inventory-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .inventory-grid span {
+    display: none;
+  }
+  .fact-grid {
+    grid-template-columns: 1fr;
+  }
+  .fact-card {
+    min-height: 300px;
+  }
+  .fact-card:nth-child(even) {
+    transform: none;
+  }
+  .fact-card > b {
+    margin-top: 40px;
+  }
+  .locked-fact {
+    align-items: flex-start;
+    padding: 20px;
+  }
+  .locked-fact > span {
+    white-space: nowrap;
+  }
+  .terminal-section {
+    padding-bottom: 110px;
+  }
+  .terminal {
+    font-size: 11px;
+  }
+  .final-cta {
+    width: calc(100% - 32px);
+    padding: 80px 20px;
+  }
+  .final-cta h2 {
+    font-size: 49px;
+  }
+  footer {
+    width: calc(100% - 32px);
+    flex-direction: column;
+    gap: 14px;
+    padding-bottom: 90px;
+  }
+  .xp-hud {
+    bottom: 12px;
+  }
+  .orbit {
+    display: none;
+  }
+}
+/* 17. Portfolio-specific components and refinements
+   These rules intentionally follow the shared layouts above. Keep this order:
+   they refine earlier card styles across all screen sizes. */
+.achievement-toast {
+  left: 20px;
+  bottom: -60px;
+}
+.shard-3 {
+  top: 35px;
+}
+.shard-4 {
+  top: 35px;
+  left: auto;
+  right: 3%;
+}
+/* Anchor offsets and visible keyboard focus indicators. */
+section[id] {
+  scroll-margin-top: 30px;
+}
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--purple-dark);
+  outline-offset: 5px;
+}
+.terminal a:focus-visible,
+.terminal button:focus-visible,
+.final-cta a:focus-visible {
+  outline-color: var(--yellow);
+}
+.quest-card {
+  position: relative;
+}
+.quest-copy {
+  min-width: 0;
+}
+.quest-meta {
+  flex-wrap: wrap;
+  line-height: 1.5;
+}
+/* Repository links within project cards. */
+.project-link {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--purple-dark);
+  font: 500 11px/1.6 var(--mono);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.project-link:hover {
+  color: var(--ink);
+}
+/* Work history: a date column alongside the role description. */
+.experience {
+  padding: 110px 0;
+}
+.experience-list {
+  display: grid;
+  gap: 20px;
+}
+.experience-card {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 36px;
+  padding: 34px;
+  border: 1.5px solid var(--ink);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 7px 7px 0 rgba(23, 21, 45, 0.1);
+}
+.experience-period {
+  font: 11px/1.7 var(--mono);
+}
+.experience-period > span {
+  color: var(--purple-dark);
+  font-size: 10px;
+}
+.experience-period small {
+  color: #686376;
+}
+.experience-card h3,
+.education-card h3 {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: -0.04em;
+}
+.experience-card .organization {
+  margin: 8px 0 18px;
+  color: var(--purple-dark);
+  font-weight: 700;
+}
+.experience-card p,
+.experience-card li {
+  line-height: 1.75;
+}
+.experience-card > div:last-child > p:not(.organization),
+.experience-card li {
+  color: #5d586d;
+  font-size: 14px;
+}
+.experience-card ul {
+  padding-left: 18px;
+  margin-bottom: 0;
+}
+.experience-card li + li {
+  margin-top: 8px;
+}
+/* Named skill groups replace arbitrary numeric proficiency scores. */
+.skill-group + .skill-group {
+  margin-top: 23px;
+  padding-top: 23px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.skill-group h3 {
+  margin: 0 0 9px;
+  color: var(--yellow);
+  font: 500 12px/1.5 var(--mono);
+}
+.skill-group p {
+  margin: 0;
+  color: #ded9ef;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.inventory {
+  align-self: start;
+}
+.inventory-note {
+  margin: 25px 0 0;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.inventory-grid span {
+  display: block;
+}
+/* Degree details, achievement units, and contact links. */
+.education-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 32px;
+  margin-bottom: 28px;
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  background: white;
+}
+.education-card p:not(.eyebrow) {
+  line-height: 1.7;
+}
+.education-meta {
+  flex-shrink: 0;
+  font: 11px/1.7 var(--mono);
+}
+.education-meta span {
+  color: #686376;
+}
+.fact-unit {
+  font: 500 18px var(--mono);
+  letter-spacing: -0.04em;
+}
+.terminal-response a {
+  color: var(--mint);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.email-link {
+  display: inline-block;
+  margin-top: 26px;
+  font: 12px/1.6 var(--mono);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+/* 18. Portfolio tablet refinements */
+@media (max-width: 900px) {
+  .experience-card {
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 24px;
+  }
+  .education-card {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .education-meta p {
+    margin-top: 0;
+  }
+}
+/* 19. Portfolio phone refinements */
+@media (max-width: 620px) {
+  .hero h1 {
+    font-size: clamp(58px, 18vw, 90px);
+  }
+  .hero-copy > .eyebrow {
+    font-size: 10px;
+    line-height: 1.5;
+  }
+  .player-name {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .shard-1 {
+    top: 12px;
+    left: auto;
+    right: 8px;
+  }
+  .final-burst {
+    top: 20px;
+    right: 20px;
+    font-size: 36px;
+  }
+  .quest-card {
+    grid-template-columns: 1fr 70px;
+  }
+  .quest-number {
+    position: static;
+  }
+  .quest-copy {
+    grid-column: 1 / -1;
+  }
+  .quest-meta {
+    margin-top: 0;
+    padding-right: 0;
+    min-height: auto;
+    flex-direction: row;
+    gap: 10px;
+  }
+  .experience {
+    padding: 90px 0;
+  }
+  .experience-card {
+    grid-template-columns: 1fr;
+    padding: 24px;
+    gap: 22px;
+  }
+  .experience-period p {
+    margin: 5px 0;
+  }
+  .education-card {
+    padding: 24px;
+  }
+  .inventory-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .inventory-grid span {
+    font-size: 11px;
+  }
+  .inventory-grid div {
+    aspect-ratio: auto;
+    min-height: 94px;
+  }
+  .fact-card > b {
+    font-size: 68px;
+  }
+  .locked-fact {
+    flex-wrap: wrap;
+  }
+  .locked-fact > div:nth-child(2) {
+    flex: 1;
+    min-width: 150px;
+  }
+  .locked-fact > span {
+    margin-left: 0;
+  }
+}
+/* 20. Reduced-motion preference
+   Keep end states while minimizing CSS motion; script.js also skips GSAP effects. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
